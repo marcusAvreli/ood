@@ -4,8 +4,6 @@ import {
 	,createElement
 	,addAttribute
 } from "../../core/index";
-import {asString} from "../../core";
-//import {hasItems} from "../../core";
 //import {asCollectionView} from "../../core";
 import {CollectionView} from "../../collections/CollectionView";
 import {Subscription} from 'rxjs/Subscription';
@@ -30,7 +28,6 @@ static richestPeople = [
 	_draggable : HTMLElement;
 	_draggable2 : HTMLElement;
 	_cv: CollectionView;
-	_pathDisplay: string;
 	private subscription1 = new Subscription();
 private subscription2 = new Subscription();
 	constructor(element, options?) {
@@ -66,7 +63,7 @@ _populateList (): void {
 		if (this._cv) {
 		
 			for (let i = 0; i < this._cv.items.length; i++) {
-			console.log("list_item:",""+this.getDisplayValue(i));
+			
 			const childSpan = document.createElement('span');
 			var numberString = i+1;
 			childSpan.innerText=numberString.toString();
@@ -79,7 +76,7 @@ _populateList (): void {
 			const childParagraph = document.createElement('p');
 			addAttribute(childParagraph,"class","person-name");
 			draggableDiv.appendChild(childParagraph);
-			childParagraph.innerText=this.getDisplayValue(i);
+			childParagraph.innerText=ListItem.richestPeople[i];
 			ListItem.listItems[i].appendChild(childSpan);
 			ListItem.listItems[i].appendChild(draggableDiv);
 			
@@ -126,44 +123,10 @@ get itemsSource(): any {
 			}
 
 			// update the list
-			//this._populateList();
-	}
-	}
-/**
-	 * Gets the string displayed for the item at a given index.
-	 *
-	 * The string may be plain text or HTML, depending on the setting
-	 * of the @see:isContentHtml property.
-	 *
-	 * @param index The index of the item.
-	 */
-	getDisplayValue(index: number): string {
-
-		// get the text or html
-		let item = null;
-		
-			item = this._cv.items[index];
-			if (this.displayMemberPath) {
-				item = item[this.displayMemberPath];
-			}
-		
-		let text = item != null ? item.toString() : '';
-
-		
-
-		// return the result
-		return text;
-	}
-	
-	get displayMemberPath(): string {
-		return this._pathDisplay;
-	}
-	set displayMemberPath(value: string) {
-		if (value != this._pathDisplay) {
-			this._pathDisplay = asString(value);
 			this._populateList();
-		}
 	}
+	}
+
 /**
    * find sortable from element. travels up parent element until found or null.
    * @param {HTMLElement} element a single sortable

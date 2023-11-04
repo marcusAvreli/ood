@@ -51,6 +51,23 @@ export class Draggable extends Control {
 		//this.listItem.insertBefore(this._tbx,this._draggable);
 	}
 
+/**
+	 * Gets or sets the array or @see:ICollectionView object that contains the items to select from.
+	 */
+	get itemsSource(): any {
+		return this.listItem.itemsSource;
+	}
+	set itemsSource(value: any) {
+		this.listItem.itemsSource = value;
+		//this._updateBtn();
+	}
+
+set displayMemberPath(value : string){
+	this.listItem.displayMemberPath=value;
+}
+
+
+
  getEventTarget(event) {
       return (event.composedPath && event.composedPath()[0]) || event.target;
   };
